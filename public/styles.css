@@ -1,6 +1,6 @@
 #addInput{
     background-color: aqua;
-    color: brown;
+    color: rgb(42, 165, 79);
     border-radius: 30px;
     outline: none;
     background: transparent;
@@ -15,7 +15,7 @@ button{
 .inputRequired::placeholder{
     border-radius: 40px;
     text-align: center;
-    background-color: brown;
+    background-color: rgb(46, 165, 42);
 }
 
 #addInput::placeholder{
