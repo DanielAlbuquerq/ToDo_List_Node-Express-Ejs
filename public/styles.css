@@ -1,0 +1,26 @@
+#addInput{
+    background-color: aqua;
+    color: brown;
+    border-radius: 30px;
+    outline: none;
+    background: transparent;
+}
+
+button{
+    border-radius: 50px;
+    height: 40px;
+    width: 40px;
+}
+
+.inputRequired::placeholder{
+    border-radius: 40px;
+    text-align: center;
+    background-color: brown;
+}
+
+#addInput::placeholder{
+    border-radius: 40px;
+    text-align: center;
+    font-style: italic;
+}
+
