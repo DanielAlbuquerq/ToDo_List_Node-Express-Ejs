@@ -2,67 +2,90 @@
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Today</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/work">Work</a>
-            </li>
-            </ul>
-        </div>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Today</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/work">Work</a>
+                </li>
+              </ul>
+          </div>
         </div>
     </nav>
+
     <section class="vh-100" style="background-color: #3da2c3;">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-lg-8 col-xl-6">
               <div class="card rounded-3">
                 <div class="card-body p-4">
-      
+
                   <p class="mb-2"><span class="h2 me-2">Team Meeting</span> <span
                       class="badge bg-danger">checklist</span></p>
                   <p class="text-muted pb-2"><%= currentDay %></p>
-      
-                  
+                    
                   <ul class="list-group rounded-0" id="listContainer">
                     <li class="list-group-item border-0 d-flex align-items-center ps-0">
                       <input class="form-check-input me-3" type="checkbox" value="  " aria-label="..." checked />
                       <s>Task list and assignments</s>
                     </li>
+
                     <li class="list-group-item border-0 d-flex align-items-center ps-0">
                       <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
                       Set due date and assignments
                     </li>
+
                     <li class="list-group-item border-0 d-flex align-items-center ps-0">
                       <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
                       Remove duplicate tasks and stories
                     </li>
+
                     <li class="list-group-item border-0 d-flex align-items-center ps-0">
                       <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
                       Update the userflow and stories
                     </li>
+
                     <li class="list-group-item border-0 d-flex align-items-center ps-0">
                       <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
                       Adjust the components
                     </li>
+
                     <% for(i=0; i < newListItem.length; i++ ){ %>
                       <li class="list-group-item border-0 d-flex align-items-center ps-0"> 
-                        <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
+                        <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." /><br>
                         <%= newListItem[i] %> 
+                        <h6>    Data from array</h>
                       </li>
-                      <% } %>
-                    <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                      <%= newListItem %>
-                    </li>
-                    
+                    <% } %>
+
+                    <% tasksList.forEach(task => { %>
+                      <li class="list-group-item border-0 d-flex align-items-center ps-0"> 
+                        <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." /><br>
+                        <%= task.task %>
+                        <h6>  Data from mongooseDB</h>
+                      </li>
+                      <% }); %>
+
+                    <!-- <li class="list-group-item border-0 d-flex align-items-center ps-0">
+                      <% // = newListItem %>
+                    </li> -->
+
                     <form class="list-group-item border-0 d-flex align-items-center ps-0" action="/" method="post">
                       <input type="text" id="addInput" name="newItem" autocomplete="off">
                       <button type="submit">+</button>
+                      <h3>Input send to array</h3>
                     </form>
+
+                    <form class="list-group-item border-0 d-flex align-items-center ps-0" action="/createTask" method="post">
+                      <input type="text" id="addInput" name="task" autocomplete="off">
+                      <button type="submit">+</button>
+                      <h3>Input send to Mongoose</h3>
+                    </form>
+
                   </ul>
-                  
+
                   <div class="divider d-flex align-items-center my-4">
                     <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Shared with</p>
                   </div>

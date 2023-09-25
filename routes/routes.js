@@ -1,8 +1,26 @@
 import { Router } from "express";
-import {getAll} from "../controller/TaskController.js";
+import {getAllTask, postAllTask, createTask } from "../controller/TaskController.js";
 
-export const routes = Router()
-routes.get("/", getAll)
+import {app} from "../index.js"
+
+export const router = Router()
+
+    router
+    .route("/")
+    .get(getAllTask)
+    .post(postAllTask)
+    
+
+    // .post(postAllTask)   
+
+    router
+    .route("/createTask")
+    .post(createTask)
+
+
+
+
+
 
 
 

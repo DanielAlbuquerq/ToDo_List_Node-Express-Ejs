@@ -1,9 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
 // import { danielF } from "./functions/functions.js";
-import {routes} from "./routes/routes.js";
+import {router} from "./routes/routes.js";
+import {connectToDb} from "./database/db.js"
 
-const app = express();
+
+connectToDb();
+export const app = express();
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,17 +27,13 @@ app.use(express.static("public"));
 //   let day = today.toLocaleDateString("en-US", options);
 //   res.render("index.ejs", { currentDay: day, newListItem: newItems });
 // });
-app.use(routes)
 
-app.get("/work", (req, res) => {
-  res.render("work.ejs");
-});
+// app.get("/work", (req, res) => {
+//   res.render("work.ejs");
+// });
 
-app.post("/", (req, res) => {
-  let item = req.body.newItem;
-  newItems.push(item);
-  res.redirect("/");
-});
+app.use(router)
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
