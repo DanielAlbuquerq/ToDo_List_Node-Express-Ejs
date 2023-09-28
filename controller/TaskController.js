@@ -22,55 +22,106 @@ const taskSchema = new mongoose.Schema({
 const taskSchemaModel = mongoose.model("Task", taskSchema)
 
 //____________________Database schema END__________________________//
+
+
 let newItems = [];
+
+let options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric", 
+  };
+
+var today = new Date();
+let dayVariable = today.toLocaleDateString("en-US", options);
+
+// ___________GetAllTask START___________________________
 
 export const getAllTask = async (req, res, next) => {
    
-    let options = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric", 
-      };
+    // let options = {
+    //     weekday: "long",
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "numeric", 
+    //   };
 
     try {
 
         const tasksList = await taskSchemaModel.find();
-
+        // const task = await taskSchemaModel.findOne({_id: req.params.id})
         var today = new Date();
         let dayVariable = today.toLocaleDateString("en-US", options);
 
-        return res.render("index.ejs", {currentDay: dayVariable, newListItem: newItems, tasksList});
-        // tasklist: tasksList
-    } catch (err) {
-        
-        res.status(500).send({error: err.message})
+            res.render("index.ejs", {currentDay: dayVariable, newListItem: newItems/*array data*/, tasksList: tasksList /*mongoose data*/, task: null, taskDelete: null});
 
+        } catch (err) {
+            
+        res.status(500).send({error: err.message})
     }
 
   next()
 };
+// ___________GetAllTask END___________________________
+
+
+// ___________CreateTask START___________________________
 
 export const createTask = async (req, res, next) => {
     const task = req.body;
 
     if(!task.task){
-        return res.redirect("/")
+        res.redirect("/error")
     }
 
     try{
 
         await taskSchemaModel.create(task) 
-        return res.render("work.ejs")
+            res.render("work.ejs")
 
     } catch (err) {
         res.status(500).send({error: err.message})
     }
     next()
 };
+// ___________CreateTask END___________________________
+
+export const errorTest = (req, res) => {
+        res.render("errorHandler.ejs")
+}
+
+// ___________GetElementById START___________________________
+
+export const getElementByid = async (req, res, next) => {
+
+    try {
+        const tasksList = await taskSchemaModel.find();
+        const task= await taskSchemaModel.findOne({_id: req.params.id});
+
+        if (req.params.method == "update" ) {
+
+            res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList, newListItem: newItems, task:task, taskDelete:null})
+
+        } else {
+            const taskDelete = await taskSchemaModel.findOne({_id: req.params.id});
+
+            res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList, newListItem: newItems, task:null, taskDelete})
+        }
+
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+
+    next()
+}
+// ___________GetElementById END___________________________
+
+
+// ___________PostAllTask START___________________________
 
 export const postAllTask = (req, res, next) => {
-   
+
     let item = req.body.newItem;
 
     newItems.push(item);
@@ -79,5 +130,47 @@ export const postAllTask = (req, res, next) => {
 
     next()
 }
+// ___________PostAllTask END___________________________
+
+// ___________Update Task START_________________________
+
+export const updateOneTask = async (req, res, next) => {
+
+    try{
+
+        const taskBody = req.body;
+        const edited = true
+        await taskSchemaModel.updateOne({_id: req.params.id}, taskBody)
+        res.redirect("/")
+
+    } catch (err) {
+        res.status(500).send({error: err.message})
+    }
+    next()
+};
+
+// ___________Update Task END___________________________
+
+// ___________Delete Task START___________________________
+
+    // const confirmDeleteTask = async (req, res) => {
+
+    //     try{
+    //         const taskBody = req.body;
+    //         await taskSchemaModel.updateOne({_id: req.params.id}, taskBody)
+    //         const taskList = await taskSchemaModel. 
+    //         return res.redirect("/")
+    
+    //     } catch (err) {
+    //         res.status(500).send({error: err.message})
+    //     }
+
+    //     next()
+    // }
+
+
+// ___________Delete Task END___________________________
+
+
 
 

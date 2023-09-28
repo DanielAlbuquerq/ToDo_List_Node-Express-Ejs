@@ -34,23 +34,14 @@
 
                     <li class="list-group-item border-0 d-flex align-items-center ps-0">
                       <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
-                      Set due date and assignments
-                    </li>
-
-                    <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                      <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
-                      Remove duplicate tasks and stories
-                    </li>
-
-                    <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                      <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
                       Update the userflow and stories
                     </li>
 
                     <li class="list-group-item border-0 d-flex align-items-center ps-0">
                       <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." />
                       Adjust the components
-                    </li>
+                    </li> 
+                                        <!--  javascript Block - for Array Display START    -->
 
                     <% for(i=0; i < newListItem.length; i++ ){ %>
                       <li class="list-group-item border-0 d-flex align-items-center ps-0"> 
@@ -59,33 +50,92 @@
                         <h6>    Data from array</h>
                       </li>
                     <% } %>
+                                        <!--  javascript Block - for Array Display END   -->
 
-                    <% tasksList.forEach(task => { %>
+
+                                        <!--  javascript Block - for Mongoose manipulation by Id START   -->
+
+                    <% tasksList.forEach(taskItem => { %>
                       <li class="list-group-item border-0 d-flex align-items-center ps-0"> 
                         <input class="form-check-input me-3" type="checkbox" value="" aria-label="..." /><br>
-                        <%= task.task %>
-                        <h6>  Data from mongooseDB</h>
+                        <%= taskItem.task %>
+                        <h6>  Data from mongooseDB</h6>
+                        <a href="/getElementById/<%=taskItem._id%>/update">Edit</a>
+                        <a href="/getElementById/<%=taskItem._id%>/delete">Delete</a>
                       </li>
                       <% }); %>
+                                        <!--  javascript Block - for Mongoose manipulation by Id END   -->
 
-                    <!-- <li class="list-group-item border-0 d-flex align-items-center ps-0">
-                      <% // = newListItem %>
-                    </li> -->
 
-                    <form class="list-group-item border-0 d-flex align-items-center ps-0" action="/" method="post">
-                      <input type="text" id="addInput" name="newItem" autocomplete="off">
-                      <button type="submit">+</button>
-                      <h3>Input send to array</h3>
-                    </form>
+                                        <!--  javascript Block for which Input to Display START   -->
 
-                    <form class="list-group-item border-0 d-flex align-items-center ps-0" action="/createTask" method="post">
-                      <input type="text" id="addInput" name="task" autocomplete="off">
-                      <button type="submit">+</button>
-                      <h3>Input send to Mongoose</h3>
-                    </form>
+                    <% if (task /*task variable from getAllTask function*/ == null) { %>
+                      <form class="list-group-item border-0 d-flex align-items-center ps-0" action="/" method="post">
+                        <input type="text" id="addInput" name="newItem" autocomplete="off">
+                        <button type="submit">+</button>
+                        <h3>Input send to array</h3>
+                      </form>
+  
+                      <form class="list-group-item border-0 d-flex align-items-center ps-0" action="/createTask" method="post">
+                        <input type="text" id="addInput" name="task" autocomplete="off">
+                        <button type="submit">+</button>
+                        <h3>Input send to Mongoose</h3>
+                      </form>
 
+                    <% } else { %>
+
+                        <form id="updateDiv" class="list-group-item border-0 d-flex align-items-center ps-0" action="/updateOne/<%= task._id %>" method="post">
+                          <input type="text" id="addInput" name="task" autocomplete="off" value="<%= task.task%>">
+                          <button type="submit">Update</button>
+                        </form>
+
+                      <% } %>
                   </ul>
+                                        <!--  javascript Block for which Input to Display END   -->
 
+                                        <!-- modal section from Bootstrap START -->
+<!-- 
+                  <section id="modal">
+                    <div class="modal" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <p>Modal body text goes here.</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section> -->
+                                        <!-- modal section from Bootstrap END -->
+
+            
+                                        <!-- modal section START -->
+
+                  <% if (taskDelete /*taskDelete from }else{ of getElementByid*/ != null) { %>
+
+                  <section id="modal">
+                    <div id="card">
+                      <a href="/">X</a>
+                      <h2>Confirmation</h2>
+                      <hr>
+                      <p>Are you sure about delete: <%=taskDelete.task%>? </p>
+                      <a href="/">No</a>
+                      <a href="/deleteTask/<%=taskDelete._id%>">Yes</a>
+                    </div>
+                  </section>
+                  <% } %>
+
+                  <!-- modal section END-->
                   <div class="divider d-flex align-items-center my-4">
                     <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Shared with</p>
                   </div>
@@ -108,7 +158,7 @@
                         class="rounded-circle me-n2" width="45">
                     </li>
                   </ul>
-      
+                  
                 </div>
               </div>
             </div>

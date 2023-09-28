@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-export const connectToDb = () => {
+export const connectToDb =  () => {
 
-  mongoose.connect(
+   mongoose.connect(
     "mongodb+srv://danieldeveloper:5Nd3iJLmTuOHd9h5@todolist.v9u4vj0.mongodb.net/?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
