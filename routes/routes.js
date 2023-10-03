@@ -1,7 +1,6 @@
 import { Router } from "express";
-import {getAllTask, postAllTask, createTask, getElementByid, errorTest, updateOneTask } from "../controller/TaskController.js";
+import {getAllTask, postAllTask, createTask, getElementByid, errorTest, updateOneTask, deleteOneTask, getItemById} from "../controller/TaskController.js";
 
-import {app} from "../index.js"
 
 export const router = Router()
 
@@ -18,6 +17,14 @@ export const router = Router()
     .route("/getElementById/:id/:method")
     .get(getElementByid)
 
+    //Routes decision method comes from the <a> tag on index.ejs.
+    //href="/getElementById/<%=taskItem._id%>/update"
+    //href="/getElementById/<%=taskItem._id%>/delete"
+
+    router
+    .route("/deleteOne/:id")
+    .get(deleteOneTask)
+
     router
     .route("/error")
     .get(errorTest)
@@ -26,11 +33,9 @@ export const router = Router()
     .route("/updateOne/:id")
     .post(updateOneTask)
 
+    // Array routes_____________________START
 
-
-
-
-
-
-
+    router
+    .route("/getItemById/:id/:method")
+    .get(getItemById)
 
