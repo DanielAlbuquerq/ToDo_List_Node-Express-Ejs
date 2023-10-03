@@ -12,7 +12,7 @@ const taskSchema = new mongoose.Schema({
     },
     check: {
         type: Boolean,
-        require: true,
+        default: false,
     },
     date: {
         type: Date,
@@ -34,7 +34,6 @@ let options = {
     day: "numeric", 
   };
 
-
 var today = new Date();
 let dayVariable = today.toLocaleDateString("en-US", options);
 
@@ -48,6 +47,8 @@ export const getAllTask = async (req, res, next) => {
     //     month: "long",
     //     day: "numeric", 
     //   };
+
+    console.log(taskSchemaModel.check)
     
     try {
 
@@ -56,6 +57,7 @@ export const getAllTask = async (req, res, next) => {
 
         var today = new Date();
         let dayVariable = today.toLocaleDateString("en-US", options);
+        let check = false
 
             res.render("index.ejs", {currentDay: dayVariable, newListItem: newItems/*array data*/, tasksList: tasksList /*mongoose data*/, task: null, taskDelete: null});
 
@@ -154,7 +156,6 @@ export const updateOneTask = async (req, res, next) => {
     }
     next()
 };
-
 // ___________Update Task END_____________________________
 
 
@@ -176,12 +177,9 @@ export const deleteOneTask = async (req, res, next) => {
 // ___________Delete Task END________________________________________
 
 
-
 // ___________Update Task from Array START__________________________
 
 // ___________Update Task from Array END_____________________________
-
-
 
 
 //____________Get Item By Id  START__________________________________
@@ -207,8 +205,6 @@ next()
 //_____________Get Element By Id END_________________________________
 
 
-
-
 // ___________Delete Task from Array START___________________________
 export const deleteArrayItem = async (req, res, next) => {
     
@@ -224,4 +220,29 @@ export const deleteArrayItem = async (req, res, next) => {
 }
 // ___________Delete Task from Array END___________________________
 
+// ___________taskCheck from Array END___________________________
+export const taskCheck = async (req, res, next) => {
+    
+    try{
+        const task= await taskSchemaModel.findOne({_id: req.params.id});
+
+        //Conditional (ternary) operator
+        task.check ? task.check = false : task.check = true;
+
+        //normal if
+        // if(task.check){
+        //     task.check = false 
+
+        // } else {
+        //     task.check = true
+        // }
+
+        await taskSchemaModel.updateOne({_id: req.params.id}, task)
+        res.redirect("/")
+    } catch (err) {
+        res.status(500).send({error: err.message})
+
+    }
+    next()
+}
 

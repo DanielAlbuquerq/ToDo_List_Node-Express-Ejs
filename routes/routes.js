@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {getAllTask, postAllTask, createTask, getElementByid, errorTest, updateOneTask, deleteOneTask, getItemById} from "../controller/TaskController.js";
+import {getAllTask, postAllTask, createTask, getElementByid, errorTest, updateOneTask, deleteOneTask, taskCheck} from "../controller/TaskController.js";
 
 
 export const router = Router()
@@ -33,9 +33,20 @@ export const router = Router()
     .route("/updateOne/:id")
     .post(updateOneTask)
 
-    // Array routes_____________________START
+    // router
+    // .route("/getItemById/:id/:method")
+    // .get(getItemById)
 
     router
-    .route("/getItemById/:id/:method")
-    .get(getItemById)
+    .route("/check/:id")
+    .get(taskCheck)
+
+
+
+
+
+
+
+
+    
 

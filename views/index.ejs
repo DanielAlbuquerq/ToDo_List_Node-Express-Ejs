@@ -1,6 +1,6 @@
 <%- include("partials/header.ejs") %>
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-expand-sm  bg-body-tertiary">
         <div class="container-fluid">
           <div class="collapse navbar-collapse" id="navbarNav">
              <span class="badge bg-warning">Made by:</span><h4>Daniel Mendes de Albuquerque</h4>
@@ -52,7 +52,7 @@
                       <% tasksList.forEach(taskItem => { %>
 
                         <li class="list-group-item border-0 d-flex ps-0"> 
-                          <p><%= taskItem.task %></p>
+                          <a class="check-<%=taskItem.check%>" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to check or uncheck" href="/check/<%= taskItem._id %>"><%= taskItem.task %></a>
 
                           <div id="div_tasklist_buttons" class="ms-3">
                           <a class="btn btn-sm btn-outline-warning" href="/getElementById/<%=taskItem._id%>/update">Edit</a>
@@ -61,7 +61,6 @@
                         </li>
                         <% }); %>
 
-                        
                                             <!--  javascript Block - for Mongoose manipulation by Id END   -->
 
                                             <!--  javascript Block for which Input to Display START   -->
@@ -136,7 +135,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <p>Are you sure about delete: <%=taskDelete.task%>? </p>
+                            <p>Are you sure about delete: <%=taskDelete.task%> ?</p>
                           </div>
                           <div class="modal-footer">
                             <a href="/" class="btn btn-outline-secondary">Close</a>
