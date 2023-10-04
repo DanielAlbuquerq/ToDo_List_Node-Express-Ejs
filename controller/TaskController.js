@@ -24,7 +24,7 @@ export const getAllTask = async (req, res, next) => {
             res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList /*mongoose data*/, task: null, taskDelete: null});
 
         } catch (err) {
-        res.status(500).send({error: err.message})
+        res.status(500).send({"getAllTasksError": err.message})
     }
 
   next()
@@ -48,7 +48,7 @@ export const createTask = async (req, res, next) => {
         res.redirect("/")
 
     } catch (err) {
-        res.status(500).send({error: err.message})
+        res.status(500).send({"createTaskError": err.message})
     }
     next()
 };
@@ -70,16 +70,16 @@ export const getElementByid = async (req, res, next) => {
         if (req.params.method == "update" ) {
 
 
-            res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList, newListItem: newItems, task:task, taskDelete:null, })
+            res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList, task:task, taskDelete:null, })
 
         } else {
             const taskDelete = await TaskSchemaModel.findOne({_id: req.params.id});
 
-            res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList, newListItem: newItems, task:null, taskDelete, })
+            res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList, task:null, taskDelete, })
         }
 
     } catch (err) {
-        res.status(500).send({error: err.message})
+        res.status(500).send({"getElementbyIdError": err.message})
     }
 
     next()
