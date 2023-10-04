@@ -1,26 +1,27 @@
-// import {taskSchemaModel} from "../models/Task";
-
+// import {TaskSchemaModel} from "../k";
+// import {TaskSchemaModel} from "../index.js";
+import {TaskSchemaModel} from "../models/Task.js"
 
 //____________________Database schema start__________________________//
 
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
-const taskSchema = new mongoose.Schema({
-    task: {
-        type: String,
-        require: true,
-    },
-    check: {
-        type: Boolean,
-        default: false,
-    },
-    date: {
-        type: Date,
-        default: Date.now(),
-    },
-});
+// const taskSchema = new mongoose.Schema({
+//     task: {
+//         type: String,
+//         require: true,
+//     },
+//     check: {
+//         type: Boolean,
+//         default: false,
+//     },
+//     date: {
+//         type: Date,
+//         default: Date.now(),
+//     },
+// });
 
-const taskSchemaModel = mongoose.model("Task", taskSchema)
+// const TaskSchemaModel = mongoose.model("Task", taskSchema)
 
 //____________________Database schema END__________________________//
 
@@ -48,12 +49,11 @@ export const getAllTask = async (req, res, next) => {
     //     day: "numeric", 
     //   };
 
-    console.log(taskSchemaModel.check)
-    
+
     try {
 
-        const tasksList = await taskSchemaModel.find();
-        // const task = await taskSchemaModel.findOne({_id: req.params.id})
+        const tasksList = await TaskSchemaModel.find();
+        // const task = await TaskSchemaModel.findOne({_id: req.params.id})
 
         var today = new Date();
         let dayVariable = today.toLocaleDateString("en-US", options);
@@ -83,7 +83,7 @@ export const createTask = async (req, res, next) => {
 
     try{
 
-    await taskSchemaModel.create(task) 
+    await TaskSchemaModel.create(task) 
         res.redirect("/")
 
     } catch (err) {
@@ -103,8 +103,8 @@ export const getElementByid = async (req, res, next) => {
 
     try {
         
-        const tasksList = await taskSchemaModel.find();
-        const task= await taskSchemaModel.findOne({_id: req.params.id});
+        const tasksList = await TaskSchemaModel.find();
+        const task= await TaskSchemaModel.findOne({_id: req.params.id});
 
         if (req.params.method == "update" ) {
 
@@ -112,7 +112,7 @@ export const getElementByid = async (req, res, next) => {
             res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList, newListItem: newItems, task:task, taskDelete:null, })
 
         } else {
-            const taskDelete = await taskSchemaModel.findOne({_id: req.params.id});
+            const taskDelete = await TaskSchemaModel.findOne({_id: req.params.id});
 
             res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList, newListItem: newItems, task:null, taskDelete, })
         }
@@ -148,7 +148,7 @@ export const updateOneTask = async (req, res, next) => {
 
         const taskBody = req.body;
         
-        await taskSchemaModel.updateOne({_id: req.params.id}, taskBody)
+        await TaskSchemaModel.updateOne({_id: req.params.id}, taskBody)
         res.redirect("/")
 
     } catch (err) {
@@ -165,7 +165,7 @@ export const deleteOneTask = async (req, res, next) => {
 
 
     try{
-        await taskSchemaModel.deleteOne({_id: req.params.id})  
+        await TaskSchemaModel.deleteOne({_id: req.params.id})  
         res.redirect("/")
 
     } catch (err) {
@@ -224,7 +224,7 @@ export const deleteArrayItem = async (req, res, next) => {
 export const taskCheck = async (req, res, next) => {
     
     try{
-        const task= await taskSchemaModel.findOne({_id: req.params.id});
+        const task= await TaskSchemaModel.findOne({_id: req.params.id});
 
         //Conditional (ternary) operator
         task.check ? task.check = false : task.check = true;
@@ -237,7 +237,7 @@ export const taskCheck = async (req, res, next) => {
         //     task.check = true
         // }
 
-        await taskSchemaModel.updateOne({_id: req.params.id}, task)
+        await TaskSchemaModel.updateOne({_id: req.params.id}, task)
         res.redirect("/")
     } catch (err) {
         res.status(500).send({error: err.message})

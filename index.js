@@ -4,9 +4,7 @@ import {router} from "./routes/routes.js";
 import {connectToDb} from "./database/db.js";
 import 'dotenv/config';
 
-
-
-connectToDb();
+connectToDb()
 
 export const app = express();
 
