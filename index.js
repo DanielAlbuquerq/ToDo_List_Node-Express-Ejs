@@ -8,8 +8,6 @@ import 'dotenv/config';
 
 connectToDb();
 
-
-
 export const app = express();
 
 const port = process.env.PORT;
