@@ -1,12 +1,18 @@
 import express from "express";
 import bodyParser from "body-parser";
 import {router} from "./routes/routes.js";
-import {connectToDb} from "./database/db.js"
+import {connectToDb} from "./database/db.js";
+import 'dotenv/config';
+
 
 
 connectToDb();
+
+
+
 export const app = express();
-const port = 3000;
+
+const port = process.env.PORT;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 

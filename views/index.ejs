@@ -7,9 +7,7 @@
           </div>
         </div>
     </nav>
-    <div class="daniel">
-      
-    </div>
+
     <section class="vh-100" style="background-color: #3da2c3;">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
@@ -27,32 +25,12 @@
                     <div class="list_div">
                       <ul class="list-group rounded-0" id="listContainer">
 
-                                            <!--  javascript Block - for Array Display START    -->
-
-                        <% for(var i=0; i < newListItem.length; i++ ){ %>
-
-                          <li class="list-group-item border-0 d-flex align-items-center ps-0"> 
-                            <input class="form-check-input me-3" type="checkbox" value="" aria-label="..."/><br>
-                            <%= newListItem[i] %>
-                            <h6>Data from array</h>
-
-                              <input type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalItem"/>  
-
-                              <a href="/getItemById/<%= newListItem.indexOf(newListItem[i])%>/updateItem">Edit</a>
-
-
-                              <a href="/getItemById/<%= newListItem.indexOf(newListItem[i])%>/delete">Delete</a>
-
-                          </li>
-                        <% } %>
-                                          <!--  javascript Block - for Array Display END   -->
-
                                           <!--  javascript Block - for Mongoose manipulation by Id START   -->
 
                       <% tasksList.forEach(taskItem => { %>
 
                         <li class="list-group-item border-0 d-flex ps-0"> 
-                          <a class="check-<%=taskItem.check%>" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to check or uncheck" href="/check/<%= taskItem._id %>"><%= taskItem.task %></a>
+                          <a class="check-<%=taskItem.check%>" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to check or uncheck" href="/check/<%= taskItem._id %>"> <%= taskItem.task %> </a>
 
                           <div id="div_tasklist_buttons" class="ms-3">
                           <a class="btn btn-sm btn-outline-warning" href="/getElementById/<%=taskItem._id%>/update">Edit</a>
@@ -65,15 +43,8 @@
 
                                             <!--  javascript Block for which Input to Display START   -->
 
-
                         <% if (task /*task variable from getAllTask function*/ == null) { %>
-
-                          <!-- <form class="list-group-item border-0 d-flex align-items-center ps-0" action="/" method="post">
-                            <input type="text" id="addInputArray" name="newItem" autocomplete="off">
-                            <button type="submit">+</button>
-                            <h3>Input send to array</h3>
-                          </form> -->
-      
+                          
                           <form class="mt-4 list-group-item border-0 d-flex align-items-center ps-0" action="/createTask" method="post">
                             <input class="border-3 focus-ring ps-4 ms-5 pe-3 form-control-sm border border-primary rounded " type="text" id="addInputMongo" name="task" autocomplete="off" style="--bs-focus-ring-x: 10px; --bs-focus-ring-y: 10px; --bs-focus-ring-blur: 4px"
                             placeholder="Insert your task here">
@@ -86,65 +57,51 @@
 
                               <input class="form-control-sm border border-primary rounded" type="text" id="addInput" name="task" autocomplete="off" value="<%= task.task%>">
                               <!-- <button type="submit">Update</button> -->
+
                               <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalForUpdate">
                                 Update
                               </button>
                             </form>
                           </div>
                           <% } %>
+
                       </ul>
                     </div> 
                   </section> 
                                         <!--  javascript Block for which Input to Display END   -->
 
-                                        <!-- modal section from Bootstrap START -->
-                                        <div class="modal fade" id="modalForUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Update modal</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                              </div>
+                  <!-- modal section from Bootstrap START -->
+                  
+                  <div class="modal fade" id="modalForUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Update modal</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
-                                              <div class="modal-body">
-                                                Are you sure about it?
-                                              </div>
+                        <div class="modal-body">
+                          Are you sure about it?
+                        </div>
 
-                                              <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button  type="submit" form="updateDiv" class="btn btn-primary">Save changes</button>
-                                              </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button  type="submit" form="updateDiv" class="btn btn-primary">Save changes</button>
+                        </div>
 
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <!-- modal section from Bootstrap END -->
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- modal section from Bootstrap END -->
 
             
-                                        <!-- modal section START -->
-  
+                  <!-- modal section START -->
 
                   <% if (taskDelete /*taskDelete from }else{ of getElementByid*/ != null) { %>
 
-                    <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block;">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Delete modal</h5>
-                            <a href="/" id="tomaKaren" class="rounded-circle btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">X</a>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <p>Are you sure about delete: <%=taskDelete.task%> ?</p>
-                          </div>
-                          <div class="modal-footer">
-                            <a href="/" class="btn btn-outline-secondary">Close</a>
-                            <a href="/deleteOne/<%=taskDelete._id%>" class="btn btn-warning">Yes</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
+                    <%-include('./components/modalDel', {task: taskDelete})%>
+                    
                   <% } %>
 
                   <!-- modal section END-->

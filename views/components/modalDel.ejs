@@ -1,0 +1,18 @@
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete modal</h5>
+          <a href="/" id="tomaKaren" class="rounded-circle btn btn-sm btn-danger" data-dismiss="modal" aria-label="Close">X</a>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure about delete: <%=task.task%> ?</p>
+        </div>
+        <div class="modal-footer">
+          <a href="/" class="btn btn-outline-secondary">Close</a>
+          <a href="/deleteOne/<%=task._id%>" class="btn btn-warning">Yes</a>
+        </div>
+      </div>
+    </div>
+  </div>
