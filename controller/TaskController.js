@@ -21,7 +21,7 @@ export const getAllTask = async (req, res, next) => {
         var today = new Date();
         let dayVariable = today.toLocaleDateString("en-US", options);
 
-            res.render("index.ejs", {currentDay: dayVariable, newListItem: newItems/*array data*/, tasksList: tasksList /*mongoose data*/, task: null, taskDelete: null});
+            res.render("index.ejs", {currentDay: dayVariable, tasksList: tasksList /*mongoose data*/, task: null, taskDelete: null});
 
         } catch (err) {
         res.status(500).send({error: err.message})
