@@ -1,32 +1,4 @@
-// import {TaskSchemaModel} from "../k";
-// import {TaskSchemaModel} from "../index.js";
 import {TaskSchemaModel} from "../models/Task.js"
-
-//____________________Database schema start__________________________//
-
-// import mongoose from "mongoose";
-
-// const taskSchema = new mongoose.Schema({
-//     task: {
-//         type: String,
-//         require: true,
-//     },
-//     check: {
-//         type: Boolean,
-//         default: false,
-//     },
-//     date: {
-//         type: Date,
-//         default: Date.now(),
-//     },
-// });
-
-// const TaskSchemaModel = mongoose.model("Task", taskSchema)
-
-//____________________Database schema END__________________________//
-
-
-let newItems = [];  
 
 let options = {
     weekday: "long",
@@ -41,28 +13,17 @@ let dayVariable = today.toLocaleDateString("en-US", options);
 // ___________GetAllTask START___________________________
 
 export const getAllTask = async (req, res, next) => {
-   
-    // let options = {
-    //     weekday: "long",
-    //     year: "numeric",
-    //     month: "long",
-    //     day: "numeric", 
-    //   };
-
 
     try {
 
         const tasksList = await TaskSchemaModel.find();
-        // const task = await TaskSchemaModel.findOne({_id: req.params.id})
 
         var today = new Date();
         let dayVariable = today.toLocaleDateString("en-US", options);
-        let check = false
 
             res.render("index.ejs", {currentDay: dayVariable, newListItem: newItems/*array data*/, tasksList: tasksList /*mongoose data*/, task: null, taskDelete: null});
 
         } catch (err) {
-            
         res.status(500).send({error: err.message})
     }
 
