@@ -10,6 +10,9 @@
   },
   "author": "Daniel Mendes",
   "license": "ISC",
+  "engines": {
+    "node": "18.16.1"
+  },
   "dependencies": {
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
