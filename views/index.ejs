@@ -1,0 +1,138 @@
+<%- include("partials/header.ejs") %>
+
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-expand-sm  bg-body-tertiary">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarNav">
+             <span class="badge bg-warning">Made by:</span><h4>Daniel Mendes de Albuquerque</h4>
+          </div>
+        </div>
+    </nav>
+
+    <section class="vh-100" style="background-color: #3da2c3;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-8 col-xl-6">
+              <div class="card rounded-3">
+                <div class="card-body p-4">
+
+                  <p class="mb-2"><span class="h2 me-2">ToDo List</span> <span
+                      class="badge bg-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                      </svg></span></p>
+                  <p class="text-muted pb-2"><%= currentDay %></p>
+                  
+                  <section class="list_section">
+                    <div class="list_div">
+                      <ul class="list-group rounded-0" id="listContainer">
+
+                                          <!--  javascript Block - for Mongoose manipulation by Id START   -->
+
+                      <% tasksList.forEach(taskItem => { %>
+
+                        <li class="list-group-item border-0 d-flex ps-0"> 
+                          <a class="check-<%=taskItem.check%>" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to check or uncheck" href="/check/<%= taskItem._id %>"> <%= taskItem.task %> </a>
+
+                          <div id="div_tasklist_buttons" class="ms-3">
+                          <a class="btn btn-sm btn-outline-warning" href="/getElementById/<%=taskItem._id%>/update">Edit</a>
+                          <a class="btn btn-sm btn-outline-danger" href="/getElementById/<%=taskItem._id%>/delete">Delete</a>
+                          </div>
+                        </li>
+                        <% }); %>
+
+                                            <!--  javascript Block - for Mongoose manipulation by Id END   -->
+
+                                            <!--  javascript Block for which Input to Display START   -->
+
+                        <% if (task /*task variable from getAllTask function*/ == null) { %>
+                          
+                          <form class="mt-4 list-group-item border-0 d-flex align-items-center ps-0" action="/createTask" method="post">
+                            <input class="border-3 focus-ring ps-4 ms-5 pe-3 form-control-sm border border-primary rounded " type="text" id="addInputMongo" name="task" autocomplete="off" style="--bs-focus-ring-x: 10px; --bs-focus-ring-y: 10px; --bs-focus-ring-blur: 4px"
+                            placeholder="Insert your task here" required>
+                            <button class="btn btn-primary rounded-circle position-absolute" style="width: 70px; height: 70px;" type="submit"><h3>+</h3></button>
+                          </form>
+
+                        <% } else { %>
+                          <div class="d-inline">
+                            <form id="updateDiv" class="list-group-item border-0 d-flex align-items-center ps-0" action="/updateOne/<%= task._id %>" method="post">
+
+                              <input class="form-control-sm border border-primary rounded" type="text" id="addInput" name="task" autocomplete="off" value="<%= task.task%>">
+                              <!-- <button type="submit">Update</button> -->
+
+                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalForUpdate">
+                                Update
+                              </button>
+                            </form>
+                          </div>
+                          <% } %>
+
+                      </ul>
+                    </div> 
+                  </section> 
+                                        <!--  javascript Block for which Input to Display END   -->
+
+                  <!-- modal section from Bootstrap START -->
+                  
+                  <div class="modal fade" id="modalForUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Update modal</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                          Are you sure about it?
+                        </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button  type="submit" form="updateDiv" class="btn btn-primary">Save changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- modal section from Bootstrap END -->
+
+            
+                  <!-- modal section START -->
+
+                  <% if (taskDelete /*taskDelete from }else{ of gettElementByid*/ != null) { %>
+
+                    <%-include('./components/modalDel', {task: taskDelete})%>
+                    
+                  <% } %>
+
+                  <!-- modal section END-->
+
+                  <div class="divider d-flex align-items-center my-4">
+                    <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Shared with</p>
+                  </div>
+      
+                  <ul class="list-group rounded-0 list-group-horizontal justify-content-center pb-2">
+                    <li class="list-group-item border-0 d-flex align-items-center p-0">
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                        class="rounded-circle me-n2" width="45">
+                    </li>
+                    <li class="list-group-item border-0 d-flex align-items-center p-0">
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp" alt="avatar"
+                        class="rounded-circle me-n2" width="45">
+                    </li>
+                    <li class="list-group-item border-0 d-flex align-items-center p-0">
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
+                        class="rounded-circle me-n2" width="45">
+                    </li>
+                    <li class="list-group-item border-0 d-flex align-items-center p-0">
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+                        class="rounded-circle me-n2" width="45">
+                    </li>
+                  </ul>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+<%- include("partials/footer.ejs") %>

@@ -1,0 +1,22 @@
+{
+  "name": "todolist_project",
+  "version": "1.0.0",
+  "description": "Todo List Project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Daniel Mendes",
+  "license": "ISC",
+  "engines": {
+    "node": "18.16.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.3"
+  }
+}
