@@ -17,5 +17,6 @@ const taskSchema = new Schema({
     },
 });
 
-export const TaskSchemaModel = mongoose.model("Taskitem", taskSchema)
-
+export const TaskSchemaModel = async () => {
+    await mongoose.model("Taskitem", taskSchema)
+}
