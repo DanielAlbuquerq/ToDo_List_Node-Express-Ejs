@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 
-export const connectToDb =  () => {
+const uri = "mongodb+srv://danieldeveloper:agiHs2wJFSSsouNt@todolist.v9u4vj0.mongodb.net/?retryWrites=true&w=majority"
 
-   mongoose.connect(
-    process.env.DB_URI,
+export const connectToDb =  async () => {
+
+   await mongoose.connect(
+    
+    uri,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -13,3 +16,4 @@ export const connectToDb =  () => {
   }).catch((err) => console.log(err))
   
 }; 
+// process.env.DB_URI 
