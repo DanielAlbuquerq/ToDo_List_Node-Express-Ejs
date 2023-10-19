@@ -1,5 +1,5 @@
 ﻿# ToDo_List_Node-Express-Ejs
-Open: <a href=" https://todo-list-daniel-31d4167bc658.herokuapp.com/" target="_blank"> https://todo-list-daniel-31d4167bc658.herokuapp.com/ </a>
+Project: https://todo-list-daniel-31d4167bc658.herokuapp.com/
  
  This project was running normally on my Local machine but I suffered a lot with this error after Heroku Deployment.
  After a deep research, I found the basic solution.
